@@ -20,6 +20,7 @@ These instructions will get you a copy of the project up and running on your loc
 ##Run
 DGAN can be run through tensorflow (Jupyter) or command line.
 
+
 Choices:
            Extension
            #help:Input file type supported format is comma-separated values, default: .csv
