@@ -1,11 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 from __future__ import print_function, division, unicode_literals, absolute_import, annotations
-# Place this before directly or indirectly importing tensorflow
+#Importing libraries
 import tensorflow as tf
 import numpy as np
 import scipy.io
@@ -15,10 +9,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-
-
-# In[66]:
-
 
 Dict = {}
 def cmdArg(arg = 'cmd_input'):
@@ -37,7 +27,7 @@ def cmdArg(arg = 'cmd_input'):
     #help:Printing steps upto this counter, default: 5
     
     Dict['hidden_units']= 2000   
-    #'--hidden_units', type=int, default=2000, help="Size of hidden layer or latent space dimensions."
+    #help:Size of hidden layer or latent space dimensions, default=2000"
     
     Dict['hidden_neurons'] = 1000
     #help:Number of neurons in the hidden layer of model, default: 1000
@@ -60,8 +50,8 @@ def cmdArg(arg = 'cmd_input'):
     Dict['threshold'] = 0.001        
     #help: the cut off value of the function used to quantify the output of a neuron in the output layer, default:0.001 
     
-    Dict['input_data'] = 'karen_raw.csv'    
-    #help: the input dataset on which want to run the model script, default:blakeley.csv    
+    Dict['input_data'] = 'Karen_raw.csv'    
+    #help: the input dataset on which want to run the model script, default:Karen_raw.csv    
     
     Dict['masking'] = True
     #help:to check tell sequence-processing layers that certain timesteps in an input are missing, and thus should be skipped when processing the data (matrix test), defult: True
@@ -81,6 +71,7 @@ def cmdArg(arg = 'cmd_input'):
     Dict['masked_matrix'] = 'masked_matrix'
     #help:save the masked matrix in the name of masked_matrix, default:masked_matrix
     
+    #Command line choices
     if arg == 'cmd_input':
         if len(sys.argv) == 1:
             exit("No arguments passed exiting")
@@ -142,14 +133,10 @@ def cmdArg(arg = 'cmd_input'):
 if __name__ == '__main__':
     cmdArg()
 
-
-# In[67]:
-
-
 #Reading the input data
 if(Dict['Extension'] == '.csv'):
-    #Keep your data under input_data/ folder to read it successfully
-    input_matrix = pd.read_csv('C:/VAE_Project/deseq2/karen_raw.csv', header = 0) 
+    #Keep your data under your present directory to read it successfully
+    input_matrix = pd.read_csv('<karen_raw.csv location>', header = 0) # Read from it's location
     first_column = input_matrix.columns[0]
     input_matrix = input_matrix.drop([first_column], axis=1)
     input_matrix = input_matrix.to_numpy()
@@ -158,10 +145,6 @@ if(Dict['Extension'] == '.csv'):
 else:
     print("Please provide data in csv format")
 
-
-# In[68]:
-
-
 # Dimensionality of input matrix
 ip_r = np.size(input_matrix, 0)
 ip_c = np.size(input_matrix, 1)
@@ -169,19 +152,11 @@ print(ip_c)
 shape = input_matrix.shape
 print("Shape of input_matrix : {0}".format(shape))
 
-
-# In[69]:
-
-
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 # Defining placeholder to feed data into the graph at later stage
 x_true = tf.placeholder(tf.float32, shape=[None, ip_c], name = 'input')
 mask = tf.placeholder(tf.float32, shape=[None, ip_c], name = 'input')
-
-
-# In[70]:
-
 
 #Masking to handle the missing, invalid, or unwanted entries in our array or dataset/dataframe
 if(Dict['masking']):
@@ -210,10 +185,6 @@ if(Dict['masking']):
         print("Masked {0} matrix saved at {1}".format(Dict['masked_matrix'] + Dict['Extension'],
                                                       Dict['model_save_at']))
 
-
-# In[71]:
-
-
 #Parameter
 learning_cost = Dict['learning_cost']
 num_epoch = Dict['epoch']
@@ -237,9 +208,6 @@ def xavier_init(shape):
     return tf.random.normal(shape=shape, stddev=1. / tf.sqrt(shape[0] / 2.))
 
 
-# In[72]:
-
-
 # Define weights and biases for our network
 weights = {
     'encoder_h1': tf.Variable(xavier_init([input_capacity, hidden_capacity])),
@@ -255,9 +223,6 @@ biases = {
     'decoder_b1': tf.Variable(xavier_init([hidden_capacity])),
     'decoder_out': tf.Variable(xavier_init([input_capacity]))
 }
-
-
-# In[73]:
 
 
 import tensorflow.compat.v1 as tf
@@ -294,15 +259,11 @@ decoder = tf.nn.tanh(decoder)
 decoder = tf.matmul(decoder, weights['decoder_out']) + biases['decoder_out']
 decoder = tf.nn.sigmoid(decoder)
 
-
-# In[74]:
-
-
 # Define loss function of our model in form of reconstrution & KL divergence loss
 @tf.function
 def vae_loss(x_generative, x_true):
     # Reconstruction loss
-    reconstruction_loss = x_true * tf.log(1e-10 + x_generative)                          + (1 - x_true) * tf.log(1e-10 + 1 - x_generative)
+    reconstruction_loss = x_true * tf.log(1e-10 + x_generative) + (1 - x_true) * tf.log(1e-10 + 1 - x_generative)
     reconstruction_loss = -tf.reduce_sum(reconstruction_loss, 1)
 
     # KL Divergence loss
@@ -313,10 +274,6 @@ def vae_loss(x_generative, x_true):
 model_loss = vae_loss(decoder, input_data)
 optimizer = tf.train.AdamOptimizer(learning_rate=learning_cost)
 train_opt = optimizer.minimize(model_loss)
-
-
-# In[75]:
-
 
 import numpy
 import csv
@@ -387,6 +344,3 @@ if __name__ == '__main__':
         print("MAE  :",mean_absolute_error(act,pred))
         print("MAPE :",mean_absolute_percentage_error(act,pred))
         print("Hinge:",hinge_loss_error(act,pred))
-
-
-# In[ ]:
