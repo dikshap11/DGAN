@@ -1,6 +1,6 @@
 # DGAN
 
-## Deep Generative Autoencoder Network [DGAN]: An imputation variational autoencoder model for downstream functional analysis of single-cell RNA-sequence (scRNA-seq) data.
+## Deep Generative Autoencoder Network: An imputation variational autoencoder model for downstream functional analysis of single-cell RNA-sequence (scRNA-seq) data.
 Diksha Pandey, Onkara Perumal P
 
 ## Getting Started
