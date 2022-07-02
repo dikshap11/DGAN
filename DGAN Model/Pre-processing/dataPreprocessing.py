@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[39]:
-
-
 #Data-Preprocessing 
 # Follow following steps for data pre-processing
 #1. Data Cleaning
@@ -15,9 +9,6 @@
 #4. Data Reduction
 
 
-# In[40]:
-
-
 #Importing the required lib
 import numpy as np
 import matplotlib.pyplot as plt
@@ -25,9 +16,6 @@ import pandas as pd
 import scipy.io
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import MinMaxScaler
-
-
-# In[44]:
 
 
 #Importing the dataset
@@ -40,21 +28,12 @@ print("Read data successfully")
 print(input_matrix)
 
 
-# In[29]:
-
-
 # viewing the first few rows of the dataset
 input_matrix.head()
 
 
-# In[30]:
-
-
 # viewing statistical info about dataset
 input_matrix.describe()
-
-
-# In[45]:
 
 
 # Dimensionality of input matrix
@@ -63,9 +42,6 @@ ip_c = np.size(input_matrix, 1)
 print(ip_c)
 shape = input_matrix.shape
 print("Shape of input_matrix : {0}".format(shape))
-
-
-# In[32]:
 
 
 #Handling the missing value (NaN)
@@ -80,14 +56,8 @@ input_matrix.iloc[:, 1:ip_c] = imputer.transform(input_matrix.iloc[:, 1:ip_c])
 print(input_matrix)
 
 
-# In[33]:
-
-
 # Encoding the categorical data
 #Not required in our case as we don't have any specific category in our dataset
-
-
-# In[34]:
 
 
 #Normalizing the dataset
@@ -106,9 +76,6 @@ input_matrix.iloc[:, 1:ip_c] = pd.DataFrame(scaler.fit_transform(input_matrix.il
 print(input_matrix)
 
 
-# In[35]:
-
-
 # dropping duplicate values
 input_matrix.iloc[:, 1:ip_c] = input_matrix.iloc[:, 1:ip_c].drop_duplicates()
 #input_matrix = input_matrix[input_matrix.iloc[:, 1:ip_c].notna()]
@@ -117,14 +84,8 @@ print(input_matrix.dropna())
 input_matrix = input_matrix.dropna()
 
 
-# In[36]:
-
-
 # viewing statistical info about dataset
 input_matrix.describe()
-
-
-# In[37]:
 
 
 # checking for missing values
@@ -135,9 +96,6 @@ input_matrix.isnull().sum()
 print(input_matrix)
 
 
-# In[46]:
-
-
 #Adding SUM column in last
 input_matrix['sums'] = input_matrix.sum(axis=1)
 input_matrix.to_csv('preprocessing_10x_sum1.csv')
@@ -145,21 +103,12 @@ shape = input_matrix.shape
 print(shape)
 
 
-# In[17]:
-
-
 mfd_input_matrix = pd.read_csv('imputed_matrix_GSE1429_sum_filtr.csv', header = 0) 
-
-
-# In[36]:
 
 
 mfd_input_matrix = input_matrix
 shape = input_matrix.shape
 print(shape)
-
-
-# In[18]:
 
 
 df = pd.DataFrame(mfd_input_matrix)
@@ -176,16 +125,4 @@ mfd_input_matrix.to_csv('imputed_matrix_GSE1429_sum_filtr_f.csv')
 #df.drop(df[df.sums >= 4.0].index , inplace=True)
 #print(df)
 #df.to_csv('file2.csv')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
