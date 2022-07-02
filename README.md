@@ -22,11 +22,11 @@ DGAN can be run through tensorflow (Jupyter) or command line.
 
 Choices:
 
-           Extension
-           #help:Input file type supported format is comma-separated values, default: .csv
+          Extension
+          #help:Input file type supported format is comma-separated values, default: .csv
 
-           Error
-           #help:Print the different types of error for the model, default: true
+          Error
+          #help:Print the different types of error for the model, default: true
 
           log
           #help:Collect log for debugging if needed, default: true
