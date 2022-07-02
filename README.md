@@ -30,11 +30,11 @@ Choices:
           log
           #help:Collect log for debugging if needed, default: true
 
-          Dict['collect_log_upto'] = 10
+          collect_log_upto
           #help:Printing steps upto this counter, default: 5
 
           hidden_units 
-          #'--hidden_units', type=int, default=2000, help="Size of hidden layer or latent space dimensions."
+          #help:Size of hidden layer or latent space dimensions, default:2000
 
           hidden_neurons
           #help:Number of neurons in the hidden layer of model, default: 1000
@@ -49,16 +49,16 @@ Choices:
           #help:Number of iteration required to train the model, default:50 (To save the bandwidth)
 
           batch_size
-          #help: the number of samples that will be propagated through the network, default:100
+          #help:the number of samples that will be propagated through the network, default:100
 
           latent_space
-          #help: encoder compress the data from initial space to encoded space, default:500
+          #help:encoder compress the data from initial space to encoded space, default:500
 
           threshold       
-          #help: the cut off value of the function used to quantify the output of a neuron in the output layer, default:0.001 
+          #help:the cut off value of the function used to quantify the output of a neuron in the output layer, default:0.001 
 
           input_data   
-          #help: the input dataset on which want to run the model script, default:blakeley.csv    
+          #help:the input dataset on which want to run the model script, default:Karen_raw.csv    
 
           masking
           #help:to check tell sequence-processing layers that certain timesteps in an input are missing, and thus should be skipped when processing the data (matrix test), defult: True
