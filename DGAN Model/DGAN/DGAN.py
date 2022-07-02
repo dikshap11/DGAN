@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[35]:
+# In[1]:
 
 
 from __future__ import print_function, division, unicode_literals, absolute_import, annotations
@@ -17,7 +17,7 @@ from scipy.stats import norm
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 
-# In[36]:
+# In[66]:
 
 
 Dict = {}
@@ -36,31 +36,31 @@ def cmdArg(arg = 'cmd_input'):
     Dict['collect_log_upto'] = 10
     #help:Printing steps upto this counter, default: 5
     
-    Dict['hidden_units']= 2500   
+    Dict['hidden_units']= 2000   
     #'--hidden_units', type=int, default=2000, help="Size of hidden layer or latent space dimensions."
     
-    Dict['hidden_neurons'] = 900   
+    Dict['hidden_neurons'] = 1000
     #help:Number of neurons in the hidden layer of model, default: 1000
     
     Dict['1E10'] = '1e-10'
     #help:Tuning the cost function by upto this value,default:1e-10
     
-    Dict['learning_cost'] = 0.0001
+    Dict['learning_cost'] = 0.00001
     #help:The amount that the weights are updated during training for the model, default:0.0001
     
-    Dict['epoch'] = 25
+    Dict['epoch'] = 50
     #help:Number of iteration required to train the model, default:50 (To save the bandwidth)
     
     Dict['batch_size'] = 100
     #help: the number of samples that will be propagated through the network, default:100
     
-    Dict['latent_space'] = 350
+    Dict['latent_space'] = 500
     #help: encoder compress the data from initial space to encoded space, default:500
     
     Dict['threshold'] = 0.001        
     #help: the cut off value of the function used to quantify the output of a neuron in the output layer, default:0.001 
     
-    Dict['input_data'] = 'blakeley.csv'    
+    Dict['input_data'] = 'karen_raw.csv'    
     #help: the input dataset on which want to run the model script, default:blakeley.csv    
     
     Dict['masking'] = True
@@ -143,13 +143,13 @@ if __name__ == '__main__':
     cmdArg()
 
 
-# In[37]:
+# In[67]:
 
 
 #Reading the input data
 if(Dict['Extension'] == '.csv'):
     #Keep your data under input_data/ folder to read it successfully
-    input_matrix = pd.read_csv('C:/VAE_Project/10X/preprocessing_10x.csv', header = 0) 
+    input_matrix = pd.read_csv('C:/VAE_Project/deseq2/karen_raw.csv', header = 0) 
     first_column = input_matrix.columns[0]
     input_matrix = input_matrix.drop([first_column], axis=1)
     input_matrix = input_matrix.to_numpy()
@@ -159,7 +159,7 @@ else:
     print("Please provide data in csv format")
 
 
-# In[38]:
+# In[68]:
 
 
 # Dimensionality of input matrix
@@ -170,7 +170,7 @@ shape = input_matrix.shape
 print("Shape of input_matrix : {0}".format(shape))
 
 
-# In[39]:
+# In[69]:
 
 
 import tensorflow.compat.v1 as tf
@@ -180,7 +180,7 @@ x_true = tf.placeholder(tf.float32, shape=[None, ip_c], name = 'input')
 mask = tf.placeholder(tf.float32, shape=[None, ip_c], name = 'input')
 
 
-# In[40]:
+# In[70]:
 
 
 #Masking to handle the missing, invalid, or unwanted entries in our array or dataset/dataframe
@@ -211,7 +211,7 @@ if(Dict['masking']):
                                                       Dict['model_save_at']))
 
 
-# In[41]:
+# In[71]:
 
 
 #Parameter
@@ -237,7 +237,7 @@ def xavier_init(shape):
     return tf.random.normal(shape=shape, stddev=1. / tf.sqrt(shape[0] / 2.))
 
 
-# In[42]:
+# In[72]:
 
 
 # Define weights and biases for our network
@@ -257,7 +257,7 @@ biases = {
 }
 
 
-# In[43]:
+# In[73]:
 
 
 import tensorflow.compat.v1 as tf
@@ -295,7 +295,7 @@ decoder = tf.matmul(decoder, weights['decoder_out']) + biases['decoder_out']
 decoder = tf.nn.sigmoid(decoder)
 
 
-# In[44]:
+# In[74]:
 
 
 # Define loss function of our model in form of reconstrution & KL divergence loss
@@ -315,7 +315,7 @@ optimizer = tf.train.AdamOptimizer(learning_rate=learning_cost)
 train_opt = optimizer.minimize(model_loss)
 
 
-# In[45]:
+# In[75]:
 
 
 import numpy
@@ -390,7 +390,3 @@ if __name__ == '__main__':
 
 
 # In[ ]:
-
-
-
-
